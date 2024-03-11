@@ -1,88 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Countdown Timer</title>
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            overflow: hidden; /* Prevent video overflow */
-            font-size: 240px;
-            font-family: 'CustomFont', Arial, sans-serif; /* Use the custom font here */
-        }
-
-        @font-face {
-            font-family: 'CustomFont';
-            src: url('main/PODIUMSharp-7.11italic(1).ttf') format('TrueType');
-            font-style: normal;
-        }
-
-        #countdown-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-        }
-
-        #countdown {
-            font-weight: bold;
-            font-size: 260px;
-        }
-
-        #custom-text {
-            font-size: 100px; /* Adjust the font size as needed */
-            margin-top: 10px; /* Adjust the top margin as needed */
-        }
-
-        #video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1; /* Ensure the video is behind the countdown text */
-        }
-    </style>
+    <title>Button Example</title>
 </head>
 <body>
-    <div id="countdown-container">
-        <div id="countdown"></div>
-        <div id="custom-text">TO BOUNCE</div>
-    </div>
-    
-    <video id="video-background" autoplay muted loop>
-        <source src="2052911 - MKTG - Grand Final Coll V Bris Countdown FOR TESTING - IPTV-FULL-21.mp4" type="video/mp4"> <!-- Replace 'your-video.mp4' with your video file path -->
-    </video>
+    <button id="button1">Button 1</button>
+    <button id="button2">Button 2</button>
+    <button id="button3">Button 3</button>
+    <button id="button4">Button 4</button>
 
     <script>
-        // Set the target time (2:30 PM AEST)
-        const targetTime = new Date();
-        targetTime.setHours(14);
-        targetTime.setMinutes(30);
-        targetTime.setSeconds(0);
-        targetTime.setMilliseconds(0);
+        // Function to send a GET request based on the button pressed
+        function sendGetRequest(buttonId) {
+            let url = '';
 
-        function updateCountdown() {
-            const currentTime = new Date();
-            const timeRemaining = targetTime - currentTime;
-
-            if (timeRemaining <= 0) {
-                document.getElementById('countdown').innerHTML = '00:00';
-            } else {
-                const minutes = Math.floor(timeRemaining / (1000 * 60));
-                const seconds = Math.floor((timeRemaining / 1000) % 60);
-                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-                const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
-                document.getElementById('countdown').innerHTML = `${formattedMinutes}:${formattedSeconds}`;
+            // Determine the URL based on the button that was clicked
+            switch(buttonId) {
+                case 'button1':
+                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/8';
+                    break;
+                case 'button2':
+                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/9';
+                    break;
+                case 'button3':
+                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/10';
+                    break;
+                case 'button4':
+                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/11';
+                    break;
+                default:
+                    console.error('Invalid button ID');
+                    return;
             }
+
+            // Fetch API to send the GET request
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); // or .text() if the response is plain text
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
-        // Update the countdown every second
-        setInterval(updateCountdown, 1000);
+        // Adding click event listeners to the buttons
+        document.getElementById('button1').addEventListener('click', () => sendGetRequest('button1'));
+        document.getElementById('button2').addEventListener('click', () => sendGetRequest('button2'));
+        document.getElementById('button3').addEventListener('click', () => sendGetRequest('button3'));
+        document.getElementById('button4').addEventListener('click', () => sendGetRequest('button4'));
     </script>
 </body>
 </html>
