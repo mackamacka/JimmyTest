@@ -10,45 +10,24 @@
     <button id="button4">Button 4</button>
 
     <script>
-        // Function to send a POST request based on the button pressed
-        function sendPostRequest(buttonId) {
-            let url = '';
-
-            // Determine the URL based on the button that was clicked
-            switch(buttonId) {
-                case 'button1':
-                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/8';
-                    break;
-                case 'button2':
-                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/9';
-                    break;
-                case 'button3':
-                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/10';
-                    break;
-                case 'button4':
-                    url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/11';
-                    break;
-                default:
-                    console.error('Invalid button ID');
-                    return;
-            }
+        // Function to send a POST request
+        function sendPostRequest() {
+            const url = 'http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/8';
 
             // Fetch API to send the POST request
             fetch(url, {
-                method: 'POST', // or 'PUT'
+                method: 'POST', // Specify the method
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify({}), // You might want to send some data
+                body: '' // No need to send any data
             })
             .then(response => {
                 if (response.ok) {
-                    return response.json(); // or .text() if the response is plain text
+                    console.log('Ping successful');
+                } else {
+                    throw new Error('Network response was not ok.');
                 }
-                throw new Error('Network response was not ok.');
-            })
-            .then(data => {
-                console.log('Success:', data);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -56,10 +35,10 @@
         }
 
         // Adding click event listeners to the buttons
-        document.getElementById('button1').addEventListener('click', () => sendPostRequest('button1'));
-        document.getElementById('button2').addEventListener('click', () => sendPostRequest('button2'));
-        document.getElementById('button3').addEventListener('click', () => sendPostRequest('button3'));
-        document.getElementById('button4').addEventListener('click', () => sendPostRequest('button4'));
+        document.getElementById('button1').addEventListener('click', sendPostRequest);
+        document.getElementById('button2').addEventListener('click', sendPostRequest);
+        document.getElementById('button3').addEventListener('click', sendPostRequest);
+        document.getElementById('button4').addEventListener('click', sendPostRequest);
     </script>
 </body>
 </html>
