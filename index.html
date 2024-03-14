@@ -1,36 +1,13 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>Button Trigger Page</title>
-    <script>
-        // Function to trigger the URL when any button is clicked
-        function triggerURL() {
-            // Using fetch to make a GET request to the URL
-            fetch('http://10.231.4.6:8080/StadiumVision/ws/rest/trigger/input/165')
-                .then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('Network response was not ok.');
-                    }
-                })
-                .then(data => console.log(data))
-                .catch(error => console.error('There has been a problem with your fetch operation:', error));
-        }
-    </script>
+<meta name="viewport" content="width=device-width">
 </head>
-<body>
-    <h1>Trigger Buttons</h1>
-    <!-- Creating 10 buttons and setting their onclick event to the triggerURL function -->
-    <button onclick="triggerURL()">Button 1</button>
-    <button onclick="triggerURL()">Button 2</button>
-    <button onclick="triggerURL()">Button 3</button>
-    <button onclick="triggerURL()">Button 4</button>
-    <button onclick="triggerURL()">Button 5</button>
-    <button onclick="triggerURL()">Button 6</button>
-    <button onclick="triggerURL()">Button 7</button>
-    <button onclick="triggerURL()">Button 8</button>
-    <button onclick="triggerURL()">Button 9</button>
-    <button onclick="triggerURL()">Button 10</button>
+<body style="margin: 0; padding: 0;">
+<video controls loop autoplay muted playsinline style="object-position: 0% 0%;" width="1920" height="1080">
+<source src="
+https://github.com/mackamacka/BBLFoodMenu1/raw/main/BBL%20Gate%205%20Closed.mp4"
+type="video/mp4">
+</video>
 </body>
 </html>
