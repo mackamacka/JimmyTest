@@ -1,13 +1,22 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTMP Stream</title>
 </head>
-<body style="margin: 0; padding: 0;">
-<video controls loop autoplay muted playsinline style="object-position: 0% 0%;" width="1920" height="1080">
-<source src="
-https://github.com/mackamacka/BBLFoodMenu1/raw/main/BBL%20Gate%205%20Closed.mp4"
-type="video/mp4">
-</video>
+<body>
+    <div id="player"></div>
+
+    <script src="https://content.jwplatform.com/libraries/fakeplayer.js"></script>
+    <script>
+        var playerInstance = jwplayer("player");
+        playerInstance.setup({
+            file: "rtmp://aflradio.wow2.pawsvhetelstra.com/live/aflvideo1_3",
+            width: 1920,
+            height: 1080,
+            autostart: true
+        });
+    </script>
 </body>
 </html>
