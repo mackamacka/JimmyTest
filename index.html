@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RTMP Stream</title>
+    <script src="https://ssl.p.jwpcdn.com/player/v/8.7.3/jwplayer.js"></script>
 </head>
 <body>
     <div id="player"></div>
-    <script src="https://ssl.p.jwpcdn.com/player/v/7.12.13/jwplayer.flash.swf"></script>
+
     <script>
-        jwplayer("player").setup({
+        var playerInstance = jwplayer("player");
+        playerInstance.setup({
             file: "rtmp://aflradio.wow1.pawsvhetelstra.com/live/aflvideo1_3",
-            width: 1280,
-            height: 720,
-            autostart: true,
-            primary: "flash"
+            width: 1280,  // Width changed to 1280 (720p)
+            height: 720,  // Height changed to 720 (720p)
+            autostart: true
         });
     </script>
 </body>
