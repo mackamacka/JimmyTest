@@ -7,16 +7,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jwplayer/7.12.13/jwplayer.js"></script>
 </head>
 <body>
-    <div id="player"></div>
+    <iframe id="playerFrame" width="1280" height="720" srcdoc='
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>JW Player</title>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jwplayer/7.12.13/jwplayer.js"></script>
+        </head>
+        <body>
+            <div id="player"></div>
 
-    <script>
-        var playerInstance = jwplayer("player");
-        playerInstance.setup({
-            file: "rtmp://aflradio.wow1.pawsvhetelstra.com/live/aflvideo1_3",
-            width: 1280,  // Width changed to 1280 (720p)
-            height: 720,  // Height changed to 720 (720p)
-            autostart: true
-        });
-    </script>
+            <script>
+                var playerInstance = jwplayer("player");
+                playerInstance.setup({
+                    file: "rtmp://aflradio.wow1.pawsvhetelstra.com/live/aflvideo1_3",
+                    width: 1280,  // Width changed to 1280 (720p)
+                    height: 720,  // Height changed to 720 (720p)
+                    autostart: true
+                });
+            </script>
+        </body>
+        </html>' frameborder="0"></iframe>
 </body>
 </html>
