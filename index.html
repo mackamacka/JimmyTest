@@ -4,31 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RTMP Stream</title>
-    <script src="https://ssl.p.jwpcdn.com/player/v/8.7.3/jwplayer.js"></script>
 </head>
 <body>
-    <iframe id="playerFrame" width="1280" height="720" srcdoc='
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>JW Player</title>
-            <script src="https://ssl.p.jwpcdn.com/player/v/8.7.3/jwplayer.js"></script>
-        </head>
-        <body>
-            <div id="player"></div>
-
-            <script>
-                var playerInstance = jwplayer("player");
-                playerInstance.setup({
-                    file: "rtmp://aflradio.wow2.pawsvhetelstra.com/live/aflvideo1_3",
-                    width: 1280,  // Width changed to 1280 (720p)
-                    height: 720,  // Height changed to 720 (720p)
-                    autostart: true
-                });
-            </script>
-        </body>
-        </html>' frameborder="0"></iframe>
+    <video id="videoPlayer" width="1280" height="720" controls autoplay></video>
+    <script src="https://cdn.jsdelivr.net/npm/flv.js@^1.5.0/dist/flv.min.js"></script>
+    <script>
+        if (flvjs.isSupported()) {
+            var videoElement = document.getElementById('videoPlayer');
+            var flvPlayer = flvjs.createPlayer({
+                type: 'rtmp',
+                url: 'rtmp://aflradio.wow2.pawsvhetelstra.com/live/aflvideo1_3'
+            });
+            flvPlayer.attachMediaElement(videoElement);
+            flvPlayer.load();
+            flvPlayer.play();
+        } else {
+            console.error('FLV.js is not supported');
+        }
+    </script>
 </body>
 </html>
