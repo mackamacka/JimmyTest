@@ -6,21 +6,16 @@
     <title>RTMP Stream</title>
 </head>
 <body>
-    <video id="videoPlayer" width="1280" height="720" controls autoplay></video>
-    <script src="https://cdn.jsdelivr.net/npm/flv.js@^1.5.0/dist/flv.min.js"></script>
+    <div id="player"></div>
+    <script src="https://ssl.p.jwpcdn.com/player/v/7.12.13/jwplayer.flash.swf"></script>
     <script>
-        if (flvjs.isSupported()) {
-            var videoElement = document.getElementById('videoPlayer');
-            var flvPlayer = flvjs.createPlayer({
-                type: 'rtmp',
-                url: 'rtmp://aflradio.wow2.pawsvhetelstra.com/live/aflvideo1_3'
-            });
-            flvPlayer.attachMediaElement(videoElement);
-            flvPlayer.load();
-            flvPlayer.play();
-        } else {
-            console.error('FLV.js is not supported');
-        }
+        jwplayer("player").setup({
+            file: "rtmp://aflradio.wow1.pawsvhetelstra.com/live/aflvideo1_3",
+            width: 1280,
+            height: 720,
+            autostart: true,
+            primary: "flash"
+        });
     </script>
 </body>
 </html>
