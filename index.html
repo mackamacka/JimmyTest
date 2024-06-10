@@ -1,34 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0060)http://10.194.175.202/file/Quad_Triple_Dual/quad_simple.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Single Video HTML</title>
+    <title>Quad Video HTML</title>
     <style type="text/css">
-        body {
-            font-family: Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-        }
-        .box {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        video {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <video autoplay>
-            <source src="udp://239.192.0.37:5000">
+    body {
+      font-family: Helvetica, arial, sans-serif;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+    .boxtl {
+      margin: 0px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      padding: 0px;
+    }
+    .boxtr {
+      margin: 0px;
+      position: absolute;
+      top: 0px;
+      left: 960px;
+      width: 100%;
+      padding: 0px;
+    }
+    .boxbl {
+      margin: 0px;
+      position: absolute;
+      top: 540px;
+      left: 0px;
+      width: 100%;
+      padding: 0px;
+    }
+    .boxbr {
+      margin: 0px;
+      position: absolute;
+      top: 540px;
+      left: 960px;
+      width: 100%;
+      padding: 0px;
+    }
+  </style>
+  <script>
+  	var video_mode = new BSVideoMode();
+	video_mode.SetDecoderMode("4K","HD",1,"4k_decoder",false);
+	video_mode.SetDecoderMode("HD1","HD",1,"hd_decoder",false);
+  </script>
+  </head>
+  <body>
+    <div class="boxtl">
+     	<video width="960" height="540" autoplay="" hwz="decoder:4k_decoder">
+        <source src="udp://239.192.0.10:50000">
         </video>          
     </div>
-</body>
-</html>
+    <div class="boxtr">
+     	<video width="960" height="540" autoplay="" hwz="decoder:4k_decoder">
+        <source src="udp://239.192.0.26:50000">
+        </video>          
+    </div>
+    <div class="boxbl">
+     	<video width="960" height="540" autoplay="" hwz="decoder:4k_decoder">
+        <source src="udp://239.192.0.32:50000">
+        </video>          
+    </div>
+    <div class="boxbr">
+     	<video width="960" height="540" autoplay="" hwz="decoder:hd_decoder; fade:never;">
+        <source src="udp://239.192.0.28:50000">
+        </video>          
+    </div>
+  
+</body></html>
