@@ -22,6 +22,7 @@
     <div id="response" style="margin-top: 20px; font-family: monospace;"></div>
 
     <script>
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const apiBaseUrl = 'https://10.231.4.6/sv-openapi/ws/rest/localcontrol/control/player';
 
         const playerId = '1029'; // Player ID
@@ -30,7 +31,7 @@
         // Function to make GET requests
         async function makeGetRequest(endpoint) {
             try {
-                const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
+                const response = await fetch(`${proxyUrl}${apiBaseUrl}/${endpoint}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Basic ' + btoa(`${pin}:`),
@@ -38,8 +39,7 @@
                     }
                 });
                 if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.text();
                 console.log(`GET ${endpoint}:`, data);
@@ -53,7 +53,7 @@
         // Function to make POST requests
         async function makePostRequest(endpoint, body) {
             try {
-                const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
+                const response = await fetch(`${proxyUrl}${apiBaseUrl}/${endpoint}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/xml',
@@ -63,8 +63,7 @@
                     body: body
                 });
                 if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.text();
                 console.log(`POST ${endpoint}:`, data);
