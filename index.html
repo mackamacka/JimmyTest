@@ -1,74 +1,90 @@
 <!DOCTYPE html>
-<!-- saved from url=(0060)http://10.194.175.202/file/Quad_Triple_Dual/quad_simple.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumVision Control</title>
+</head>
+<body>
+    <h1>StadiumVision Control Panel</h1>
     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quad Video HTML</title>
-    <style type="text/css">
-    body {
-      font-family: Helvetica, arial, sans-serif;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-    .boxtl {
-      margin: 0px;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      padding: 0px;
-    }
-    .boxtr {
-      margin: 0px;
-      position: absolute;
-      top: 0px;
-      left: 960px;
-      width: 100%;
-      padding: 0px;
-    }
-    .boxbl {
-      margin: 0px;
-      position: absolute;
-      top: 540px;
-      left: 0px;
-      width: 100%;
-      padding: 0px;
-    }
-    .boxbr {
-      margin: 0px;
-      position: absolute;
-      top: 540px;
-      left: 960px;
-      width: 100%;
-      padding: 0px;
-    }
-  </style>
-  <script>
-  	var video_mode = new BSVideoMode();
-	video_mode.SetDecoderMode("4K","HD",1,"4k_decoder",false);
-	video_mode.SetDecoderMode("HD1","HD",1,"hd_decoder",false);
-  </script>
-  </head>
-  <body>
-    <div class="boxtl">
-     	<video width="960" height="540" autoplay="" hwz="decoder:4k_decoder">
-        <source src="udp://239.192.0.10:50000">
-        </video>          
-    </div>
-    <div class="boxtr">
-     	<video width="960" height="540" autoplay="" hwz="decoder:4k_decoder">
-        <source src="udp://239.192.0.26:50000">
-        </video>          
-    </div>
-    <div class="boxbl">
-     	<video width="960" height="540" autoplay="" hwz="decoder:4k_decoder">
-        <source src="udp://239.192.0.32:50000">
-        </video>          
-    </div>
-    <div class="boxbr">
-     	<video width="960" height="540" autoplay="" hwz="decoder:hd_decoder; fade:never;">
-        <source src="udp://239.192.0.28:50000">
-        </video>          
-    </div>
-  
-</body></html>
+    <!-- Buttons for controlling the TV -->
+    <button id="powerOn">Power On</button>
+    <button id="powerOff">Power Off</button>
+    <button id="channelUp">Channel Up</button>
+    <button id="channelDown">Channel Down</button>
+    <button id="volumeUp">Volume Up</button>
+    <button id="volumeDown">Volume Down</button>
+    <button id="mute">Mute</button>
+    <button id="unmute">Unmute</button>
+    <button id="channel504">Change to Channel 504</button>
+
+    <div id="response" style="margin-top: 20px; font-family: monospace;"></div>
+
+    <script>
+        const apiBaseUrl = 'https://10.231.4.6/sv-openapi/ws/rest/localcontrol/control/player';
+
+        const playerId = '1029'; // Player ID
+        const pin = '96821'; // PIN
+
+        // Function to make GET requests
+        async function makeGetRequest(endpoint) {
+            try {
+                const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(`${pin}:`),
+                        'Accept': 'application/xml'
+                    }
+                });
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
+                }
+                const data = await response.text();
+                console.log(`GET ${endpoint}:`, data);
+                document.getElementById('response').innerText = `GET ${endpoint}: ${data}`;
+            } catch (error) {
+                console.error(`Error with GET ${endpoint}:`, error);
+                document.getElementById('response').innerText = `Error with GET ${endpoint}: ${error}`;
+            }
+        }
+
+        // Function to make POST requests
+        async function makePostRequest(endpoint, body) {
+            try {
+                const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/xml',
+                        'Authorization': 'Basic ' + btoa(`${pin}:`),
+                        'Accept': 'application/xml'
+                    },
+                    body: body
+                });
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
+                }
+                const data = await response.text();
+                console.log(`POST ${endpoint}:`, data);
+                document.getElementById('response').innerText = `POST ${endpoint}: ${data}`;
+            } catch (error) {
+                console.error(`Error with POST ${endpoint}:`, error);
+                document.getElementById('response').innerText = `Error with POST ${endpoint}: ${error}`;
+            }
+        }
+
+        // Event listeners for buttons
+        document.getElementById('powerOn').addEventListener('click', () => makeGetRequest(`power/on/${playerId}`));
+        document.getElementById('powerOff').addEventListener('click', () => makeGetRequest(`power/off/${playerId}`));
+        document.getElementById('channelUp').addEventListener('click', () => makeGetRequest(`channel/up/${playerId}`));
+        document.getElementById('channelDown').addEventListener('click', () => makeGetRequest(`channel/down/${playerId}`));
+        document.getElementById('volumeUp').addEventListener('click', () => makeGetRequest(`volume/up/${playerId}`));
+        document.getElementById('volumeDown').addEventListener('click', () => makeGetRequest(`volume/down/${playerId}`));
+        document.getElementById('mute').addEventListener('click', () => makeGetRequest(`muting/on/${playerId}`));
+        document.getElementById('unmute').addEventListener('click', () => makeGetRequest(`muting/off/${playerId}`));
+        document.getElementById('channel504').addEventListener('click', () => makeGetRequest(`channel/504/${playerId}`));
+    </script>
+</body>
+</html>
